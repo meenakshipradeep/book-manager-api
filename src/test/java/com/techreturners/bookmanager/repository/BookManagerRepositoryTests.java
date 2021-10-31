@@ -37,4 +37,16 @@ public class BookManagerRepositoryTests {
 
     }
 
+    @Test
+    public void testDeleteAndFindBookByIdReturnsBook() {
+
+        Book book = new Book(2L, "Book Two", "This is the description for Book Two", "Person Two", Genre.Fantasy);
+        // bookManagerRepository.deleteById(book.getId());
+        bookManagerRepository.delete(book);
+
+        assertThat(book.getId()).isNull();
+
+    }
+
+
 }

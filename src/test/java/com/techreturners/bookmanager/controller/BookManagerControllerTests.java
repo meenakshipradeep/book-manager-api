@@ -108,5 +108,29 @@ public class BookManagerControllerTests {
 
         verify(mockBookManagerServiceImpl, times(1)).updateBookById(book.getId(), book);
     }
+    //User Story 5-Delete book by Id solution
+    @Test
+    public void testDeleteMappingAndGetAllBooksAfterDeletion() throws Exception {
+        //Arrange
+        List<Book> listBooks = new ArrayList<>();
+        listBooks.add(new Book(1L, "Book One", "This is the description for Book One", "Person One", Genre.Education));
+        listBooks.add(new Book(2L, "Book Two", "This is the description for Book Two", "Person Two", Genre.Education));
+        listBooks.add(new Book(3L, "Book Three", "This is the description for Book Three", "Person Three", Genre.Education));
+
+        List<Book> newBook = new ArrayList<>();
+        // books.add(new Book(1L, "Book One", "This is the description for Book One", "Person One", Genre.Education));
+        newBook.add(new Book(2L, "Book Two", "This is the description for Book Two", "Person Two", Genre.Education));
+        newBook.add(new Book(3L, "Book Three", "This is the description for Book Three", "Person Three", Genre.Education));
+        //Act
+        when(mockBookManagerServiceImpl.deleteBookById(1L)).thenReturn(newBook);
+        //Assert
+        // assertThat(newBook).hasSize(2);
+        this.mockMvcController.perform(
+                        MockMvcRequestBuilders.put("/api/v1/book/2L")
+                                .contentType(MediaType.APPLICATION_JSON))
+                .andExpect(MockMvcResultMatchers.status().isOk());
+        verify(mockBookManagerServiceImpl, times(1)).deleteBookById(2L);
+
+    }
 
 }
